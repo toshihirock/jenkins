@@ -6,7 +6,7 @@ jenkins Cookbook
 Usage
 -----
 
-clone`run_list`に以下のように追記してください。
+`run_list`に以下のように追記してください。
 
 	{
 	  "name":"my_node",
