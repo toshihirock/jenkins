@@ -1,5 +1,8 @@
 jenkins Cookbook
 ================
+
+Install latest jenkins
+
 Usage
 -----
 	{
