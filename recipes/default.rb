@@ -11,16 +11,15 @@ include_recipe 'java'
 case node['platform']
 when 'ubuntu'
   apt_repository 'jenkins' do
-    uri 'http://pkg.jenkins-ci.org/debian binary/'
-    key 'http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key'
+    uri node['jenkins']['apt_uri']
+    key node['jenkins']['apt_key']
     action :add
   end
-  #notifies :run, "execute[apt-get update"]
 when 'centos'
   yum_repository 'jenkins.repo' do
-    baseurl 'http://pkg.jenkins-ci.org/redhat'
+    baseurl node['jenkins']['yum_baseurl']
     description 'jenkins'
-    gpgkey 'http://pkg.jenkins-ci.org/redhat/jenkins-ci.org.key'
+    gpgkey node['jenkins']['yum_gpgkey']
     action :create
   end
 end
@@ -34,12 +33,12 @@ service 'jenkins' do
 end
 
 # move to jennkins setting file
-cookbook_file "jenkins" do
+cookbook_file 'jenkins' do
   case node['platform']
   when 'ubuntu'
-    path '/etc/default/jenkins'
+    path node['jenkins']['ubuntu_setting_path']
   else
-    path '/etc/sysconfig/jenkins'
+    path node['jenkins']['centos_setting_path']
   end
   action :create
   notifies :reload, 'service[jenkins]'
