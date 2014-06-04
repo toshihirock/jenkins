@@ -4,6 +4,10 @@ when 'ubuntu'
   execute "apt-get update" do
     command "apt-get update"
   end
+when 'centos'
+  execute "yum update" do
+    command "yum update -y"
+  end
 end
 include_recipe 'java'
 
